@@ -15,4 +15,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
         else phoneError.textContent = "Phone Number is Incorrect";
     })
 
-   
+    const address = document.querySelector('#address');
+    const addressError = document.querySelector('.address-error');
+    address.addEventListener('input', function () {
+        let addressRegex = RegExp('.*');
+        if (addressRegex.test(address.value)) addressError.textContent = "";
+        else addressError.textContent = "Address is Incorrect";
+    })
+});
+
