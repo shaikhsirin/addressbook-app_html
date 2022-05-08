@@ -24,3 +24,58 @@ window.addEventListener('DOMContentLoaded', (event) => {
     })
 });
 
+const save = () => {
+    try{
+        let contactList = createAddressBook();
+        createAndUpdateStorage(contactList);
+    } catch (e) {
+        return;
+    }
+};
+
+const createAddressBook = () => {
+    
+    let contactList = new AddressBookContact();
+
+    try {
+        contactList.name = getInputValueById('#name');
+    } catch (e) {
+        setTextValue('.name-error', e);
+        throw e;
+    }
+
+    contactList.name = getInputValueById('#name');
+    contactList.phone = getInputValueById('#phone');
+    contactList.address = getInputValueById('#address');
+    contactList.city = getInputValueById('#city');
+    contactList.state = getInputValueById('#state');
+    contactList.zip = getInputValueById('#zip');
+    alert(contactList.toString());
+    return contactList;
+};
+
+const getInputValueById = (id) => {
+    let value = document.querySelector(id).value;
+    return value;
+};
+
+function createAndUpdateStorage(contactList) {
+    let addressBookList = JSON.parse(localStorage.getItem("AddressBookList"));
+    if (addressBookList != undefined) {
+        addressBookList.push(contactList);
+    } else {
+        addressBookList = [contactList];
+    }
+    alert(addressBookList.toString());
+    localStorage.setItem("AddressBookList", JSON.stringify(addressBookList));
+};
+
+const resetForm = () => {
+    setValue('#name', '');
+    setValue('#phone', '');
+    setValue('#address', '');
+    setValue('#city', 'City');
+    setValue('#state', 'State');
+    setValue('#zip', '');
+};
+
